@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Profile</title>
+</head>
+<body>
+	<h1>This is your profile!</h1>
+	
+	<p>Your username is: <span th:text="${username}"></span></p>
+	<p>Your password is: <span th:text="${password}"></span></p>
+
+	<ul th:each="ad : ${ads}">
+		<li th:text="${ad}"></li>
+	</ul>
+</body>
+</html>
