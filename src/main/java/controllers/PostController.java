@@ -1,10 +1,12 @@
 package controllers;
 
 import models.Post;
+import models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import repositories.PostRepository;
+import repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,11 @@ import java.util.List;
 public class PostController {
 	
 	private final PostRepository postsDao;
+	private final UserRepository usersDao;
 	
-	public PostController(PostRepository postsDao) {
+	public PostController(PostRepository postsDao, UserRepository usersDao) {
 		this.postsDao = postsDao;
+		this.usersDao = usersDao;
 	}
 	
 	@GetMapping("/posts")
@@ -34,15 +38,16 @@ public class PostController {
 	}
 	
 	@GetMapping("/posts/create")
-	@ResponseBody
 	public String postCreateForm() {
-		return "view the form for creating a post";
+		return "posts/create";
 	}
 	
 	@PostMapping("/posts/create")
-	@ResponseBody
-	public String postCreate() {
-		return "create a new post";
+	public String postCreate(@RequestParam String title, @RequestParam String body) {
+		User user = usersDao.getOne(1L);
+		Post post = new Post(title, body, user);
+		postsDao.save(post);
+		return "redirect:/posts";
 	}
 	
 	@GetMapping("/posts/{id}/edit")
