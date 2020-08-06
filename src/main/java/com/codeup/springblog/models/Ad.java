@@ -1,4 +1,4 @@
-package models;
+package com.codeup.springblog.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -22,6 +22,14 @@ public class Ad {
 	@OneToMany(mappedBy = "parentAd")
 	@JsonManagedReference
 	private List<Comment> comments;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "ad_tag",
+			joinColumns = {@JoinColumn(name = "ad_id")},
+			inverseJoinColumns = {@JoinColumn(name =
+			"tag_id")})
+	@JsonManagedReference
+	private List<Tag> tags;
 	
 	public Ad() {
 	}
@@ -62,5 +70,13 @@ public class Ad {
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public List<Tag> getTags() {
+		return tags;
+	}
+	
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 }

@@ -1,4 +1,4 @@
-package models;
+package com.codeup.springblog.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
