@@ -35,7 +35,7 @@ public class AdController {
 	// return a view
 	@GetMapping("/ads/view")
 	public String getAdsIndex(Model model) {
-		model.addAttribute("ads", adsDao.findAll());
+		model.addAttribute("ads", adsDao.findAllByOrderByIdDesc());
 		return "ads/index";
 	}
 	

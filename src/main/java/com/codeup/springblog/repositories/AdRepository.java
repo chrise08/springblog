@@ -23,4 +23,6 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
 	// using a native query
 	@Query(nativeQuery = true, value = "SELECT title FROM ads WHERE length(title) < 10")
 	List<String> getAdsOfCertainTitleLengthNative();
+	
+	List<Ad> findAllByOrderByIdDesc();
 }
