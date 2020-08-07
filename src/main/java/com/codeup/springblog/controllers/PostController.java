@@ -34,38 +34,73 @@ public class PostController {
 		return "posts/show";
 	}
 	
+	// WITHOUT from-model binding
+//	@GetMapping("/posts/create")
+//	public String postCreateForm() {
+//		return "posts/create";
+//	}
+	
+	// WITH form-model binding
 	@GetMapping("/posts/create")
-	public String postCreateForm() {
+	public String postCreateForm(Model model) {
+		model.addAttribute("post", new Post());
 		return "posts/create";
 	}
 	
+	// WITHOUT form-model binding
+//	@PostMapping("/posts/create")
+//	public String postCreate(@RequestParam String title, @RequestParam String body) {
+//		User user = usersDao.getOne(1L);
+//		Post post = new Post(title, body, user);
+//		postsDao.save(post);
+//		return "redirect:/posts";
+//	}
+	
+	// WITH form-model binding
 	@PostMapping("/posts/create")
-	public String postCreate(@RequestParam String title, @RequestParam String body) {
+	public String postCreate(@ModelAttribute Post post) {
 		User user = usersDao.getOne(1L);
-		Post post = new Post(title, body, user);
+		post.setAuthor(user);
 		postsDao.save(post);
 		return "redirect:/posts";
 	}
+	// WITHOUT form-model binding
+//	@GetMapping("/posts/{id}/edit")
+//	public String editForm(@PathVariable long id, Model model) {
+//		model.addAttribute("post", postsDao.getOne(id));
+//		return "posts/edit";
+//	}
 	
+	// WITH form-model binding
 	@GetMapping("/posts/{id}/edit")
 	public String editForm(@PathVariable long id, Model model) {
 		model.addAttribute("post", postsDao.getOne(id));
 		return "posts/edit";
 	}
 	
+	// WITHOUT form-model binding
+//	@PostMapping("/posts/{id}/edit")
+//	public String update(@PathVariable long id,
+//	                     @RequestParam String title,
+//	                     @RequestParam String body) {
+//
+//		Post postToEdit = postsDao.getOne(id);
+//
+//		postToEdit.setTitle(title);
+//		postToEdit.setBody(body);
+//
+//		postsDao.save(postToEdit);
+//
+//		return "redirect:/posts/" + id;
+//	}
+	
+	// WITH form-model binding
 	@PostMapping("/posts/{id}/edit")
-	public String update(@PathVariable long id,
-	                     @RequestParam String title,
-	                     @RequestParam String body) {
-		
-		Post postToEdit = postsDao.getOne(id);
-		
-		postToEdit.setTitle(title);
-		postToEdit.setBody(body);
-		
-		postsDao.save(postToEdit);
-		
-		return "redirect:/posts/" + id;
+	public String update(@PathVariable long id, @ModelAttribute Post post) {
+		User user = usersDao.getOne(1L);
+		post.setAuthor(user);
+		postsDao.save(post);
+		return "redirect:/posts";
 	}
 	
 	@PostMapping("/posts/{id}/delete")

@@ -5,11 +5,15 @@
 	<title>All Posts</title>
 </head>
 <body>
+	<h1>All Posts</h1>
+	<a class="btn btn-primary" th:href="@{/posts/create}">Create a post</a>
+	
 <!-- This is where we iterate through the Posts ArrayList -->
-<div th:each="post : ${posts}">
-	<h1 th:text="${post.title}"></h1>
-	<p th:text="${post.body}"></p>
-	<p th:text="${post.author.email}"></p>
-</div>
+	<div th:each="post : ${posts}">
+		<h1 th:text="${post.title}"></h1>
+		<p th:text="${post.body}"></p>
+		<p th:text="${post.author.email}"></p>
+		<a class="btn btn-primary" th:href="@{/posts/{id}/edit(id=${post.id})}" role="button">Edit</a>
+	</div>
 </body>
 </html>
